@@ -1,0 +1,127 @@
+
+[1m[95m================================================================================[0m
+[1m[95m              FD-LLM: Fault Detection with LLM Explanations - DEMO              [0m
+[1m[95m================================================================================[0m
+
+[96mThis demo showcases the complete hybrid system:[0m
+[96m  • Fast time-series classifier for real-time detection[0m
+[96m  • LLM explainer for natural language explanations[0m
+[96m  • Self-consistency voting for reliability[0m
+
+[1m[94m▶ 1. Loading Trained Model[0m
+[94m--------------------------------------------------------------------------------[0m
+[92m✓ Model loaded from outputs/exp_full_dataset/model.pkl[0m
+  Model type: dict
+
+[1m[94m▶ 2. Analyzing Classifier Predictions[0m
+[94m--------------------------------------------------------------------------------[0m
+[92m✓ Loaded 5236 predictions[0m
+  Columns: window_id, prediction, confidence, features...
+  
+Prediction Distribution:
+    Dilution                 :  2625 ( 50.1%) █████████████████████████
+    Normal                   :  1800 ( 34.4%) █████████████████
+    Settling/Segregation     :   811 ( 15.5%) ███████
+  
+Confidence Statistics:
+    Mean: 0.717
+    Median: 0.749
+    Min: 0.344
+    Max: 1.000
+
+[1m[94m▶ 3. Loading LLM Explanations[0m
+[94m--------------------------------------------------------------------------------[0m
+[92m✓ Loaded 6 explanations[0m
+  
+Explanation Quality:
+    Average voting agreement: 100.0%
+    Perfect agreement (100%): 6 / 6
+  
+Top Diagnoses from LLM:
+    Settling/Segregation     :     4 ( 66.7%)
+    Dilution                 :     2 ( 33.3%)
+
+[1m[94m▶ 4. Example Fault Explanation[0m
+[94m--------------------------------------------------------------------------------[0m
+Window ID: 0
+Timestamp: 2025-10-12T19:49:12.035586
+
+[1mClassifier Prediction:[0m
+    Class: [92mDilution[0m
+    Confidence: 74.6%
+
+[1mLLM Explanation:[0m
+    Diagnosis: [92mDilution[0m
+    Confidence: 85.6%
+    Agreement: 100% (5/5 votes)
+
+[1mEvidence:[0m
+    1. Density mean at 1009.6 kg/m³ is below normal range (expected >1050 kg/m³)
+    2. SG at 1.010 is 0.015 below target (threshold: ±0.03)
+    3. SG at 1.010 is 0.010 below target (threshold: ±0.03)
+    4. Flow stability at nan (threshold: >0.1) is low
+    5. Density trend at -65.00 kg/m³ per 5min indicates progressive dilution
+
+[1mCross-Checks:[0m
+    • Mass balance check: Measured Mass Flow < Calculated (Flow × Density)
+    • Mass balance check: measured vs calculated flow
+    • Density-SG correlation verification
+
+[1mRecommended Actions:[0m
+    → Increase feed rate of solids
+    → Monitor density and SG closely
+    → Increase solids addition to pipeline to maintain process consistency
+
+
+[1m[94m▶ 5. Classifier vs LLM Agreement Analysis[0m
+[94m--------------------------------------------------------------------------------[0m
+Total windows analyzed: 6
+Agreement: 6 (100.0%)
+Disagreement: 0 (0.0%)
+
+
+[1m[94m▶ 6. System Capabilities[0m
+[94m--------------------------------------------------------------------------------[0m
+✓ [1mTime-Series Classification    [0m - MultiROCKET + Ridge Classifier
+✓ [1mFeature Engineering           [0m - Flow, Density, Pressure features
+✓ [1mPhysical Validation           [0m - Mass balance, Density-SG checks
+✓ [1mLLM Explanations              [0m - Mistral-7B-Instruct with QLoRA
+✓ [1mSelf-Consistency              [0m - 5-vote ensemble for reliability
+✓ [1mFault Classes                 [0m - 10 classes (Normal + 9 faults)
+✓ [1mReal-time Capable             [0m - Classifier <1ms, LLM ~3s per window
+✓ [1mColab Integration             [0m - GPU-accelerated explanation generation
+
+[1m[94m▶ 7. Model Performance[0m
+[94m--------------------------------------------------------------------------------[0m
+[93m⚠ Could not parse results file[0m
+
+[1m[94m▶ 8. Next Steps[0m
+[94m--------------------------------------------------------------------------------[0m
+To use this system:
+
+  1. Train on your data:
+       python training/train_rocket.py --data your_data.csv --run_name exp_001
+
+  2. Export for Colab:
+       python scripts/export_for_colab.py --model outputs/exp_001/model.pkl --data your_data.csv
+
+  3. Generate explanations on Colab GPU:
+       - Upload FD_LLM_Colab_Explainer.ipynb to Colab
+       - Select GPU runtime and run all cells
+
+  4. Analyze results:
+       python scripts/analyze_classifier_performance.py
+
+  For more details, see:
+      • README.md - Main documentation
+      • DEMO_PROJECT_SUMMARY.md - Project status
+      • docs/COLAB_SETUP.md - Colab integration guide
+
+[1m[95m================================================================================[0m
+[1m[95m                                 Demo Complete!                                 [0m
+[1m[95m================================================================================[0m
+
+
+[92m✓ Successfully demonstrated FD-LLM system[0m
+[96mFor questions or issues, see the documentation in docs/[0m
+

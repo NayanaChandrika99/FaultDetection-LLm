@@ -1,0 +1,96 @@
+data:
+  interpolate_gaps: true
+  max_gap_sec: 3
+  max_missing_ratio: 0.1
+  min_valid_ratio: 0.9
+  physical_validation: true
+  sample_rate: 1.0
+  stride_sec: 15
+  window_sec: 60
+evaluation:
+  metrics:
+  - macro_f1
+  - per_class_recall
+  - pr_auc
+  - confusion_matrix
+  random_state: 42
+  robustness:
+    calibration_drift: true
+    cross_machine: false
+    noise_injection: true
+    sensor_dropout: true
+  stratify: true
+  test_size: 0.2
+explainer:
+  backbone: meta-llama/Llama-3-8B-Instruct
+  load_in_4bit: true
+  lora_alpha: 32
+  lora_dropout: 0.05
+  lora_r: 16
+  max_new_tokens: 512
+  min_numeric_evidence: 3
+  self_consistency_k: 5
+  temperature: 0.8
+  top_k: 50
+  top_p: 0.9
+logging:
+  level: INFO
+  log_dir: logs
+  tensorboard: false
+  wandb: false
+model:
+  classifier:
+    alphas:
+    - 0.001
+    - 0.01
+    - 0.1
+    - 1.0
+    - 10.0
+    - 100.0
+    - 1000.0
+    cv: 5
+    type: ridge
+  family: multirocket
+  fusion: baseline
+  multirocket:
+    kernels_per_group:
+      density: 2000
+      flow: 3000
+      process: 1250
+    max_dilations: 32
+    n_kernels: 6250
+  sensor_groups:
+    density:
+    - 4
+    - 5
+    - 6
+    - 7
+    flow:
+    - 0
+    - 1
+    - 2
+    - 3
+    process:
+    - 8
+    - 9
+    - 10
+thresholds:
+  cv_unstable: 0.15
+  density_sg_diff_max: 0.05
+  density_spike_sigma: 3.0
+  dv_drift: 5.0
+  mass_balance_error_max: 0.15
+  pressure_spike_sigma: 2.5
+  pressure_variability: 0.1
+  sg_deviation: 0.03
+  solids_consistency_error_max: 0.15
+  zero_flow: 0.01
+training:
+  batch_size: 64
+  early_stopping_patience: 10
+  epochs: 50
+  learning_rate: 0.0001
+  optimizer: adamw
+  scheduler: cosine
+  warmup_epochs: 5
+  weight_decay: 0.01

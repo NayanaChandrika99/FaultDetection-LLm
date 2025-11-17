@@ -1,0 +1,88 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Data files
+data/raw/*.csv
+data/raw/*.parquet
+data/processed/
+*.h5
+*.hdf5
+
+# Model checkpoints
+outputs/
+checkpoints/
+*.pkl
+*.pth
+*.pt
+*.bin
+*.onnx
+
+# Logs
+logs/
+*.log
+wandb/
+tensorboard/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+# Exception: Keep the main Colab notebook
+!FD_LLM_Colab_Explainer.ipynb
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Documentation builds
+docs/_build/
+site/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+.cache/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# Explanations output
+*.jsonl
+explanations/
+
